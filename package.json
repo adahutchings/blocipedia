@@ -1,0 +1,22 @@
+{
+  "name": "blocipedia",
+  "version": "1.0.0",
+  "description": "A wiki-like application ",
+  "main": "(src/server.js)",
+  "scripts": {
+    "test": "export NODE_ENV=test && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adahutchings/blocipedia.git"
+  },
+  "keywords": [
+    "wiki"
+  ],
+  "author": "Ada Hutchings",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adahutchings/blocipedia/issues"
+  },
+  "homepage": "https://github.com/adahutchings/blocipedia#readme"
+}
