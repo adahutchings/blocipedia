@@ -17,23 +17,21 @@ module.exports = {
             password: hashedPassword
         })
         .then((user) => {
+
             const msg = {
                 to: newUser.email,
-                from: 'donotreply@example.com',
+                from: 'donotreply@blocipedia.com',
                 subject: 'Welcome to Blocipedia',
-                text: 'Thanks for joining Blocipedia',
-                html: '<strong>To start contributing to the Wiki community please log in</strong>',
+                text: 'Thank you for joining Blocipedia. To start contributing to the Wiki community please visit the site and login with the user information you provided. Looking forward to collaborating with you! - The Blocipedia Team',
+                html: 'Thank you for Joining Blocipedia. To start contributing to the Wiki community please visit the site and login with the user information you provided.<br>Looking forward to collaborting with you!<br><br>-The Blocipedia Team',
             };
 
             sgMail.send(msg);
-            console.log("=== TEST ===");
-            console.log(msg);
-            console.log("=== END ===");
+
             callback(null, user);
         })
-        .catch((err) => {
-            console.log(err);
-            callback(err)
+        .catch((err) => { 
+            callback(err);
         })
     },
 
