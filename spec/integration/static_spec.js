@@ -9,7 +9,7 @@ describe("routes : static", () => {
 
       request.get(base, (err, res, body) => {
         expect(res.statusCode).toBe(200);
-        expect(body).toContain("Welcome to Blocipedia");
+        expect(res.body).toContain("Welcome to Blocipedia");
         done();
       });
     });

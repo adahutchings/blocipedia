@@ -63,3 +63,4 @@ typings/
 # .env module
 /node_modules
 +.env
+sendgrid.env
