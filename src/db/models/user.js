@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
 
     User.hasMany(models.Wiki, {
-      forgeignKey: "userId",
+      foreignKey: "userId",
       as: "wikis"
     });
 

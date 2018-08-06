@@ -1,5 +1,5 @@
 const Wiki = require("./models").Wiki;
-
+const User = require("./models").User;
 module.exports = {
 
     getAllWikis(callback){
@@ -8,9 +8,6 @@ module.exports = {
             callback(null, wikis);
         })
         .catch((err) => {
-            console.log("===TEST===");
-            console.log(err);
-            console.log("===END===");
             callback(err);
         })
     },
@@ -19,7 +16,8 @@ module.exports = {
         return Wiki.create({
 
             title: newWiki.title,
-            body: newWiki.body
+            body: newWiki.body,
+            userId: newWiki.userId
         })
         .then((wiki) => {
             callback(null, wiki);
