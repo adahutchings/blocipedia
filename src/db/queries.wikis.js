@@ -8,6 +8,9 @@ module.exports = {
             callback(null, wikis);
         })
         .catch((err) => {
+            console.log("===TEST===");
+            console.log(err);
+            console.log("===END===");
             callback(err);
         })
     },
