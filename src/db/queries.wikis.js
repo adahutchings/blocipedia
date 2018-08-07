@@ -1,5 +1,7 @@
 const Wiki = require("./models").Wiki;
 const User = require("./models").User;
+const Authorizer = require("../policies/wikis");
+
 module.exports = {
 
     getAllWikis(callback){
@@ -38,33 +40,48 @@ module.exports = {
     },
 
     deleteWiki(id, callback){
-        return Wiki.destroy({
-            where: {id}
-        })
+        return Wiki.findById(req.params.id)
         .then((wiki) => {
-            callback(null, wiki);
+            const authorized = new Authorizer(req.user, wiki).destroy();
+            
+            if(authorized) {
+                wiki.destroy()
+                .then((res) => {
+                    callback(null, wiki);
+                });
+            } else {
+                req.flash("notice", "You are not authorized to do that.")
+                callback(401);
+            }
         })
         .catch((err) => {
             callback(err); 
         })
     },
 
-    updateWiki(id, updatedWiki, callback){
-        return Wiki.findById(id)
+    updateWiki(req, updatedWiki, callback){
+        return Wiki.findById(req.params.id)
         .then((wiki) => {
             if(!wiki){
                 return callback("Wiki not found");
             }
 
-            wiki.update(updatedWiki, {
-                fields: Object.keys(updatedWiki)
-            })
-            .then(() => {
-                callback(null, wiki);
-            })
-            .catch((err) => {
-                callback(err);
-            });
+            const authorized = new Authorizer(req.user, wiki).update();
+            
+            if(authorized){
+                wiki.update(updatedWiki, {
+                    fields: Object.keys(updatedWiki)
+                })
+                .then(() => {
+                    callback(null, wiki);
+                })
+                .catch((err) => {
+                    callback(err);
+                });
+            } else {
+                req.flash("notice", "You are not authorized to do that.");
+                callback("Forbidden");
+            }
         });
     },
 

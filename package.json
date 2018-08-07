@@ -5,6 +5,7 @@
   "main": "(src/server.js)",
   "scripts": {
     "test": "export NODE_ENV=test && jasmine",
+    "testWikis": "export NODE_ENV=test && jasmine spec/integration/wikis_spec.js",
     "start": "node src/server.js"
   },
   "repository": {
