@@ -14,8 +14,20 @@
           <li class="nav-item">
             <a class="nav-link" href="/wikis">Wikis</a>
           </li>
-          
-          <% if(currentUser) { %>
+
+          <% if(currentUser && currentUser.role === "premium") { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/upgrade">Downgrade Membership</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="/users/sign_out">Sign Out</a>
+            </li>
+          } <% else if(currentUser) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/upgrade">Upgrade to Premium</a>
+            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="/users/sign_out">Sign Out</a>
             </li>
