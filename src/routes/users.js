@@ -10,6 +10,7 @@ router.get("/users/upgrade", userController.upgrade);
 router.post("/users/sign_in", validation.validateUsersSignIn, userController.signIn);
 router.post("/users", validation.validateUsers, userController.create);
 router.post("/users/:id/upgrade", userController.payment);
+router.post("/users/:id/downgrade", userController.downgrade);
 
 
 module.exports = router;

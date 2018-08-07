@@ -11,15 +11,14 @@
 
       <% include ../static/partials/messages.ejs %>
 
-      <% if(currentUser && currentUser.role == "standard"){ %>
-        <h3>Upgrade your membership to Premium</h3>
-        <h4>As a Premium Member you will be able to:</h4>
-        <ul>
-            <li>Create Private Wikis</li>
-            <li>Colaborate with other Premium Members on Private Wikis</li>
-        </ul>
+      <h1>Membership Options</h1>
 
-        <form action="/users/<%currentUser.id%>/upgrade" method="POST">
+      <% if(currentUser && currentUser.role == "standard") { %>
+        <h3>Upgrade your membership to Premium</h3>
+        <h4>As a Premium Member you will be able to create and colaborate on private wikis</h4>
+        
+
+        <form action="/users/<%=currentUser.id%>/upgrade" method="POST">
             <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="<%=publishableKey%>"
@@ -30,8 +29,16 @@
                 data-locale="auto">
             </script>
         </form>
-     }
+        
+     <% } else if(currentUser && currentUser.role === "premium") { %>
+      <h5>Downgrade your membership</h5>
 
+      <form action="/users/<%=currentUser.id%>/downgrade" method="POST">
+        <button type="submit" class="btn btn-danger">Standard Membership</button>
+      </form>
+
+    <% } %>
+    
     </main>
 
     <% include ../static/partials/baseScripts.ejs %>

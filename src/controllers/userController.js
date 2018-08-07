@@ -56,7 +56,7 @@ module.exports = {
     },
 
     upgrade(req, res, next){
-        res.render("users/upgrade", {publishableKey});
+        res.render("users/upgrade", {publishableKey}); //Update to live in production
     },
 
     payment(req, res, next){
@@ -77,6 +77,12 @@ module.exports = {
             userQueries.upgrade(req.dataValues.id);
             res.render("users/payment_success");
         })
+    },
+
+    downgrade(req, res, next){
+        userQueries.downgrade(req.user.dataValues.id);
+        req.flash("notice", "Your account has been downgraded to a Standard Membership");
+        res.redirect("/");
     }
 
 

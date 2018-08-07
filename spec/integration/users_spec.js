@@ -93,10 +93,11 @@ describe("routes : users", () => {
         it("should render a view with the upgrade payment option", (done) => {
             request.get(`${base}/upgrade`, (err, res, body) => {
                 expect(err).toBeNull();
-                expect(body).toContain("Upgrade your membership to Premium");
+                expect(body).toContain("Membership Options");
+                console.log(body);
                 done();
             });
-        });
+        });                            
     });
 
     
