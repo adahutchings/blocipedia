@@ -37,7 +37,6 @@ describe("routes : wikis", () => {
                     body: "This is the first wiki",
                 })
                 .then((wiki) => {
-                    console.log('done', !!wiki);
                     this.wiki = wiki;
                     done();
                 })
@@ -175,8 +174,6 @@ describe("routes : wikis", () => {
                 request.post(options, (err, res, body) => {
                     Wiki.findOne({where: {title: "This is a member wiki"}})
                     .then((wiki) => {
-                        console.log("===TEST===");
-                        console.log(wiki);
                         expect(wiki).not.toBeNull();
                         expect(wiki.title).toBe("This is a member wiki");
                         expect(wiki.body).toBe("Members can create wikis.");
