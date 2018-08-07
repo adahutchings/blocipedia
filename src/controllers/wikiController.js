@@ -63,7 +63,7 @@ module.exports = {
 
     destroy(req, res, next) {
 
-        wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
+        wikiQueries.deleteWiki(req, (err, wiki) => {
             if(err){
                 res.redirect(err, `/wikis/${req.params.id}`)
             } else {
@@ -83,7 +83,7 @@ module.exports = {
                 if(authorized){
                     res.render("wikis/edit", {wiki});
                 } else {
-                    req.flash("You are not authorized to do that.");
+                    req.flash("notice", "You are not authorized to do that.");
                     res.redirect(`/wikis/${req.params.id}`)
                 }
             }
@@ -91,7 +91,7 @@ module.exports = {
     },
 
     update(req, res, next) {
-
+    
         wikiQueries.updateWiki(req, req.body, (err, wiki) => {
             if(err || wiki == null){
                 res.redirect(404, `/wikis/${req.params.id}/edit`);

@@ -44,6 +44,6 @@ module.exports = (sequelize, DataTypes) => {
     return this.role === "premium";
   };
 
-  
+
   return User;
 };

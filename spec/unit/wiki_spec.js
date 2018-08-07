@@ -13,6 +13,7 @@ describe("Wiki", () => {
             User.create({
                 email: "mrman@example.com",
                 password: "1234567890",
+                userName: "mrMan",
                 role: "standard"
             })
             .then((user) => {

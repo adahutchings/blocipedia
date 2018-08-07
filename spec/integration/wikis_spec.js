@@ -14,30 +14,33 @@ describe("routes : wikis", () => {
 
         sequelize.sync({force: true}).then((res) => {
             User.create({
-                username: "exampleUser",
+                userName: "exampleUser",
                 email: "example@example.com",
                 password: "1234567890",
                 role: "standard"
             })
             .then((user) => {
                 this.user = user;
+                
                 request.get({
                     url: "http://localhost:3000/auth/fake",
                     form: {
                         role: user.role,
                         userId: user.id,
                         email: user.email,
-                        userName: user.name
                     }
                 })
-            });
-            Wiki.create({
-                title: "First Wiki",
-                body: "This is the first wiki",
             })
-            .then((wiki) => {
-                this.wiki = wiki;
-                done();
+            .then(() => {
+                Wiki.create({
+                    title: "First Wiki",
+                    body: "This is the first wiki",
+                })
+                .then((wiki) => {
+                    console.log('done', !!wiki);
+                    this.wiki = wiki;
+                    done();
+                })
             })
             .catch((err) => {
                 console.log(err);
@@ -156,19 +159,24 @@ describe("routes : wikis", () => {
         });
 
         describe("POST /wikis/create", () => {
-            it("should create a new wiki and redirect", () => {
+            
+            it("should create a new wiki and redirect", (done) => {
+
                 const options = {
                     url: `${base}/create`,
                     form: {
-                        title: "This is a memeber wiki",
+                        title: "This is a member wiki",
                         body: "Members can create wikis.",
                         userId: this.user.id
                     }
                 };
 
+                
                 request.post(options, (err, res, body) => {
                     Wiki.findOne({where: {title: "This is a member wiki"}})
                     .then((wiki) => {
+                        console.log("===TEST===");
+                        console.log(wiki);
                         expect(wiki).not.toBeNull();
                         expect(wiki.title).toBe("This is a member wiki");
                         expect(wiki.body).toBe("Members can create wikis.");
@@ -197,7 +205,9 @@ describe("routes : wikis", () => {
                 Wiki.all()
                 .then((wikis) => {
                     const wikiCountBeforeDelete = wikis.length;
+                
                     expect(wikiCountBeforeDelete).toBe(1);
+
                     request.post(`${base}/${this.wiki.id}/destroy`, (err, res, body) => {
                         Wiki.all()
                         .then((wikis) => {
