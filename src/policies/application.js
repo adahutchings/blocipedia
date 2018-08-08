@@ -17,7 +17,7 @@ module.exports = class ApplicationPolicy {
          return this.user && this.user.role == "standard";
      }
 
-     isPremium() {
+     _isPremium() {
          return this.user && this.user.role == "premium";
      }
    
@@ -35,7 +35,7 @@ module.exports = class ApplicationPolicy {
    
      edit() {
        return this.new() && 
-       this.record && (this._isStandard() || this._isOwner());
+       this.record && (this._isStandard() || this._isOwner() || this._isPremium());
      }
    
      update() {

@@ -94,7 +94,6 @@ describe("routes : users", () => {
             request.get(`${base}/upgrade`, (err, res, body) => {
                 expect(err).toBeNull();
                 expect(body).toContain("Membership Options");
-                console.log(body);
                 done();
             });
         });                            
