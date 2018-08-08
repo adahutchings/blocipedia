@@ -63,7 +63,34 @@ describe("routes : wikis", () => {
             });
         });
 
+        describe("GET /wikis/create", () => {
+            it("should create a new private wiki", (done) => {
+                const options = {
+                    url: `${base}/create`,
+                    form: {
+                        title: "This is a secret wiki",
+                        body: "Premium members can create private wikis.",
+                        userId: this.user.id,
+                        private: true
+                    }
+                };
 
+                
+                request.post(options, (err, res, body) => {
+                    Wiki.findOne({where: {title: "This is a secret wiki"}})
+                    .then((wiki) => {
+                        expect(wiki).not.toBeNull();
+                        expect(wiki.title).toBe("This is a secret wiki");
+                        expect(wiki.body).toBe("Premium members can create private wikis.");
+                        done();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        done();
+                    });
+                });
+            })
+        })
 
     });
 
@@ -129,7 +156,8 @@ describe("routes : wikis", () => {
                     form: {
                         title: "This is a member wiki",
                         body: "Members can create wikis.",
-                        userId: this.user.id
+                        userId: this.user.id,
+                        private: false
                     }
                 };
 
