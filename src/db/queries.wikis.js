@@ -87,4 +87,18 @@ module.exports = {
         });
     },
 
+    toPublic(id) {
+        return Wiki.all()
+        .then((wikis) => {
+            wikis.forEach((wiki) => {
+                if(wiki.userId == id && wiki.private == true) {
+                    wiki.update({ private: false })
+                }
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
 }

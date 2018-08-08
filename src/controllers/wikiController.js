@@ -52,7 +52,6 @@ module.exports = {
                     console.log(err);
                     res.redirect(500, "/wikis/new");
                 } else {
-                    console.log(wiki.private);
                     res.redirect(303, `/wikis/${wiki.id}`);
                 }
             });
