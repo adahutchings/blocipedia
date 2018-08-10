@@ -22,6 +22,10 @@
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"><%= wiki.body %></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
+
+        <% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.isAdmin())) { %>
+            <a href="/wikis/<%=wiki.id%>/collaborators" class="btn btn-info">Edit Collaborations</a>
+        <% } %>
       </form>
     </main>
 
