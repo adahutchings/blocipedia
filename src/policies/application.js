@@ -3,6 +3,7 @@ module.exports = class ApplicationPolicy {
      constructor(user, record, collaborators) {
        this.user = user;
        this.record = record;
+       this.collaborators = collaborators;
      }
    
      _isOwner() {
@@ -34,12 +35,13 @@ module.exports = class ApplicationPolicy {
      }
    
      edit() {
-       if(this.record.private == false){
-          return this.new() && 
-          this.record && (this._isStandard() || this._isAdmin() || this._isPremium());
-       } else {
-         return this.new() && this.record && (this._isPremium() || this._isAdmin() || this._isStandard());
-       }
+      if (this.record.private == false) {
+        return this.new() &&
+          this.record && (this._isStandard() || this._isPremium() || this._isAdmin());
+        } else if (this.record.private == true) {
+          return this.new() &&
+            this.record && (this._isPremium()  || this._isAdmin() || this._isStandard());
+        }
        
      }
    
